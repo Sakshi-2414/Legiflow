@@ -169,7 +169,7 @@ export default function HistoryPage() {
                             className="mr-6"
                             onClick={() => {
                                 const text = selectedItem?.type === "comparison"
-                                    ? `Document A:\n${selectedItem.textA}\n\nDocument B:\n${selectedItem.textB}`
+                                    ? `Document A:\n${selectedItem.textA || ""}\n\nDocument B:\n${selectedItem.textB || ""}`
                                     : `Extracted Clauses:\n${selectedItem?.clauses?.join('\n\n')}`;
                                 
                                 navigator.clipboard.writeText(text).then(() => {
