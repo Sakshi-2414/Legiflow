@@ -39,7 +39,8 @@ export default function HistoryPage() {
                     // Fetch without orderBy to avoid composite index requirements
                     const q = query(
                         collection(db, "history"),
-                        where("userId", "==", user.uid)
+                        where("userId", "==", user.uid),
+                        limit(50)
                     );
                     const querySnapshot = await getDocs(q);
                     data = querySnapshot.docs.map(doc => ({
