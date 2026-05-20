@@ -172,18 +172,27 @@ export default function HistoryPage() {
                                     ? `Document A:\n${selectedItem.textA || ""}\n\nDocument B:\n${selectedItem.textB || ""}`
                                     : `Extracted Clauses:\n${selectedItem?.clauses?.join('\n\n')}`;
                                 
-                                navigator.clipboard.writeText(text).then(() => {
-                                    toast({
-                                        title: "Copied to clipboard",
-                                        description: "The details have been copied to your clipboard.",
+                                    if (navigator.clipboard && navigator.clipboard.writeText) {
+                                    navigator.clipboard.writeText(text).then(() => {
+                                        toast({
+                                            title: "Copied to clipboard",
+                                            description: "The details have been copied to your clipboard.",
+                                        });
+                                    }).catch(err => {
+                                        console.error("Failed to copy text: ", err);
+                                        toast({
+                                            title: "Copy failed",
+                                            description: "Could not copy to clipboard.",
+                                            variant: "destructive",
+                                        });
                                     });
-                                }).catch(err => {
-                                    console.error("Failed to copy text: ", err);
+                                } else {
                                     toast({
                                         title: "Copy failed",
-                                        description: "Could not copy to clipboard.",
+                                        description: "Clipboard API not supported in this browser.",
                                         variant: "destructive",
                                     });
+                                }
                                 });
                             }}
                         >
